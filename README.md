@@ -5,9 +5,11 @@ Certifique-se de ter o ambiente de desenvolvimento configurado corretamente. Uti
 
 # Instalar as dependências
 npm install
+
 npx tsc
 
 # Executar o projeto
-cd /out/app
+cd /out/app 
+
 node main.js
 
