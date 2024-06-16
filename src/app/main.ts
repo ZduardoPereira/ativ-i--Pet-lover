@@ -1,166 +1,181 @@
-import listagemClientes from "../insert/insertCliente";
 import Entrada from "../io/entrada";
-import DeletarCliente from "../modelo/deletarCliente";
-import DeletarPet from "../modelo/deletarPet";
-import Empresa from "../modelo/empresa";
-import Pet from "../modelo/pet";
-import servico from "../modelo/servico";
-import AtualizarCliente from "../negocio/cliente/atualizarCliente";
-import AtualizarPet from "../negocio/pet/atualizarPet";
-import CadastrarProdutoCli from "../negocio/produtos/cadProdCli";
-import CadastroProduto from "../negocio/produtos/cadastrarProdutos";
-import CadastroCliente from "../negocio/cliente/cadastroCliente";
-import CadastroPet from "../negocio/pet/cadastroPet";
-import ListagemClientes from "../negocio/cliente/listagemClientes";
-import ListagemProduto from "../negocio/produtos/listagemProdutos";
-import DeletarProduto from "../negocio/produtos/deletarProd";
-import AtualizarProduto from "../negocio/produtos/atualizaProd";
-import CadastroServico from "../negocio/servico/cadastrarServico";
-import ListagemServico from "../negocio/servico/listagemServico";
-import AtualizarServico from "../negocio/servico/atualizarServico";
-import DeletarServico from "../negocio/servico/deletarServico";
-import ProdutosMaisConsumidos from "../negocio/listagens/servProd";
-import ListarMaisConsumidos from "../negocio/listagens/clienteMaisConsumiram";
-import ClientesQueMaisConsumiramProdutosQuant from "../negocio/listagens/clienteMaisConsumiram";
-import ClientesQueMaisConsumiramServicosValor from "../negocio/listagens/clienteMaisValor";
+import Empresa from "../model/Empresa";
+import CadastroCliente from "../service/cadastroCliente";
+import CadastroProduto from "../service/cadastroProduto";
+import CadastroServico from "../service/cadastroServico";
+import ConsumoProduto from "../service/consumoProduto";
+import ConsumoServico from "../service/consumoServico";
+import EditorCliente from "../service/editorCliente";
+import EditorProduto from "../service/editorProduto";
+import EditorServico from "../service/editorServico";
+import ListagemClientes from "../service/listagemCliente";
+import ListagemProdutos from "../service/listagemProduto";
+import ListagemServicos from "../service/listagemServico";
+import Selecionador from "../service/selecionador";
+import SelecionadorServicos from "../service/selecionador.Servico";
+import SelecionadorProdutos from "../service/selecionadorProduto";
 
 
-console.log(`Bem-vindo ao melhor sistema de gerenciamento de pet shops e clínicas veterinarias`)
+console.log(`Bem vindo ao melhor serviço de gerenciamento de pet shops e clinicas veterinárias`)
+
 let empresa = new Empresa()
 let execucao = true
 
-while (execucao) {
-    console.log(`Opções:`);
-    console.log(`\nCliente`);
-    console.log(`1 - Cadastrar cliente`);
-    console.log(`2 - Listar todos os clientes`);
-    console.log(`3 - Deletar um cliente`);
-    console.log(`4 - Atualizar cliente`);
-    console.log(`\nPet:`);
-    console.log(`5 - Cadastrar pet`);
-    console.log(`6 - Deletar um pet`);
-    console.log(`7 - Atualizar pet`);
-    console.log(`\nProdutos:`);
-    console.log(`8 - Listagem de produtos`);
-    console.log(`9 - Cadastrar novos produtos`);
-    console.log(`10 - Cadastrar produto consumido`);
-    console.log(`11 - Deletar produto`);
-    console.log(`12 - Atualizar produto`);
-    console.log(`\nServiços: `);
-    console.log(`13 - Cadastrar Serviço`);
-    console.log(`14 - Listagem de Serviços`);
-    console.log(`15 - Atualizar Serviço`);
-    console.log(`16 - Deletar serviço`);
-    console.log(`\nListagens: `)
-    console.log(`17 - Top 10 Clientes que mais consumiram em quantidade`);
-    console.log(`18 - Listagem geral de produtos e serviços mais consumidos`);
-    console.log(`19 - Listagem do top 5 clientes que mais consumiram em valor`);
-    console.log(`\n0 - Sair`);
-    console.log(``);
-    console.log(``);
+while(execucao){
+    console.log(`Opções: `)
+    console.log(`1- Cadastrar Cliente`);
+    console.log(`2- Cadastrar Produto`);
+    console.log(`3- Cadastrar Serviço`);
+    console.log(`4- Editar Cliente`);
+    console.log(`5- Editar Produto`);
+    console.log(`6- Editar Serviço`);
+    console.log(`7- Excluir Cliente`);
+    console.log(`8- Excluir Produto`);
+    console.log(`9- Excluir Serviço`);
+    console.log(`10- Listar Clientes`);
+    console.log(`11- Listar Produtos`);
+    console.log(`12- Listar Serviço`);
+    console.log(`13- Cadastrar consumo de Produtos`);
+    console.log(`14- Cadastrar consumo de Serviços`);
+    console.log(`15- Listar os 10 Clientes que mais consumiram produtos ou serviços em quantidade`);
+    console.log(`16- Listar Produtos e Serviços mais consumidos`);
+    console.log(`17- Listar 5 clientes que mais consumiram em valor `);
+    console.log(`18- Listar produtos mais consumidos por tipo de pet`);
+    console.log(`19- Listar produtos mais consumidos por raça de pet`);
+    console.log(`20- Listar serviços mais consumidos por tipo de pet`);
+    console.log(`21- Listar serviços mais consumidos por raça de pet`);
+    console.log(`0- Sair`);
 
     let entrada = new Entrada()
-    let opcao = entrada.receberNumero(`Por favor, escolha uma opção: `)
+    let opcao = entrada.receberNumero(`Digite a opção desejada: `)
 
     switch (opcao) {
-        case 1:
+        case 1: //Cadastrar Cliente
             let cadastro = new CadastroCliente(empresa.getClientes)
-            cadastro.cadastrarCliente()
+            cadastro.cadastrar()
             break;
         case 2:
+            let cadastroProdutos = new CadastroProduto(empresa.getProdutos)
+            cadastroProdutos.cadastrar()
+            break;
+        case 3: 
+            let cadastroServicos = new CadastroServico(empresa.getServicos)
+            cadastroServicos.cadastrar()
+            break;
+        case 4:
+            let cpfEditar = entrada.receberTexto(`Digite um cpf para edição: `)
+            let selecionadorClienteEditar = new Selecionador(empresa.getClientes)
+            let clienteEditar = selecionadorClienteEditar.selecionar(cpfEditar)
+
+            let editor = new EditorCliente()
+            editor.editar(clienteEditar)
+            break;
+        case 5:
+            let nomeEditar = entrada.receberTexto(`Digite o nome do produto que deseja editar: `)
+            let selecionarProdutoEditar = new SelecionadorProdutos(empresa.getProdutos)
+            let produtoEditar = selecionarProdutoEditar.selecionar(nomeEditar)
+
+            let editorProduto = new EditorProduto()
+            editorProduto.editar(produtoEditar)
+            break;
+        case 6:
+            let nomeServicoEditar = entrada.receberTexto(`Digite o nome do serviço que deseja editar: `)
+            let selecionadorServicoEditar = new SelecionadorServicos (empresa.getServicos)
+            let servicoEditar = selecionadorServicoEditar.selecionar(nomeServicoEditar)
+
+            let editorServico = new EditorServico()
+            editorServico.editar(servicoEditar)
+            break;
+        case 7: 
+            let cpf = entrada.receberTexto(`Digite o CPF que deseja excluir: `)
+            let selecionadorCliente = new Selecionador (empresa.getClientes)
+            let cliente = selecionadorCliente.selecionar(cpf)
+        case 8: 
+            let nomeProduto = entrada.receberTexto(`Digite o nome do produto que deseja excluir: `)
+            let selecionadorProduto = new SelecionadorProdutos(empresa.getProdutos)
+            let produto = selecionadorProduto.selecionar(nomeProduto)
+
+            let indiceProduto = empresa.getProdutos.indexOf(produto)
+            delete empresa.getProdutos[indiceProduto]
+            break;
+        case 9: 
+            let nomeServico = entrada.receberTexto(`Digite o nome do serviço que deseja excuir: `)
+            let selecionadorServico = new SelecionadorServicos (empresa.getServicos)
+            let servico = selecionadorServico.selecionar(nomeServico)
+
+            let indiceServico = empresa.getServicos.indexOf(servico)
+            delete empresa.getServicos[indiceServico]
+            break;
+        case 10:
             let listagem = new ListagemClientes(empresa.getClientes)
             listagem.listar()
             break;
-        case 3:
-            let deletarL = new DeletarCliente(listagemClientes)
-            deletarL.deletarCliente()
-            let deletar = new DeletarCliente(empresa.getClientes)
-            deletar.deletarCliente()
-            break;
-        case 4:
-            let atualizarL = new AtualizarCliente(listagemClientes)
-            atualizarL.atualizarCliente()
-            let atualizar = new AtualizarCliente(empresa.getClientes)
-            atualizar.atualizarCliente()
-            break;
-        case 5:
-            let cadastroPet = new CadastroPet(empresa.getClientes);
-            cadastroPet.cadastrarPet();
-            break;
-        case 6:
-            let deletarPet = new DeletarPet(empresa.getClientes);
-            deletarPet.deletarPet();
-            break;
-        case 7:
-            let atualizarPet = new AtualizarPet(empresa.getClientes);
-            atualizarPet.atualizarPet();
-            break;
-        case 8:
-            let listagemP = new ListagemProduto(empresa.getProdutos);
-            listagemP.listar();
-            break;
-
-        case 9:
-            // Cadastro de produto
-            let cadastroProd = new CadastroProduto(empresa);
-            cadastroProd.cadastrarProduto();
-            break;
-
-        case 10:
-            let cadastrarProdutoCli = new CadastrarProdutoCli(empresa.getClientes, empresa.getProdutos, empresa.getServicos);
-            cadastrarProdutoCli.cadastrarProdutoServicoCli();
-            break;
         case 11:
-            // Deletar produto
-            let deletarP = new DeletarProduto(empresa.getProdutos);
-            deletarP.deletarProduto();
-
-            let deletarPro = new DeletarProduto(empresa.getProdutos);
-            deletarPro.deletarProduto();
+            let listagemProdutos = new ListagemProdutos(empresa.getProdutos)
+            listagemProdutos.listar()
             break;
-
         case 12:
-            // Atualizar produto
-            let atualizarP = new AtualizarProduto(empresa.getProdutos);
-            atualizarP.atualizarProduto();    
-            let atualizarPro = new AtualizarProduto(empresa.getProdutos);
-            atualizarPro.atualizarProduto();
+            let listagemServicos = new ListagemServicos(empresa.getServicos)
+            listagemServicos.listar()
             break;
-        
         case 13:
-            let cadastroSer = new CadastroServico(empresa.getServicos)
-            cadastroSer.cadastrarServico()
+            let cpfConsumoProduto = entrada.receberTexto(`Digite um CPF para cadastrar o consumo de produtos: `)
+            let selecionadorClienteConsumoProduto = new Selecionador(empresa.getClientes)
+            let clienteConsumidorProduto = selecionadorClienteConsumoProduto.selecionar(cpfConsumoProduto)
+
+            let nomeProdutoConsumido = entrada.receberTexto(`Digite o nome do produto: `)
+            let selecionadorProdutoConsumo = new SelecionadorProdutos (empresa.getProdutos)
+            let produtoConsumido = selecionadorProdutoConsumo.selecionar(nomeProdutoConsumido)
+
+            let cadastroConsumoProduto = new ConsumoProduto()
+            cadastroConsumoProduto.cadastrarConsumoProduto(clienteConsumidorProduto, produtoConsumido)
             break;
         case 14:
-            // Supondo que empresa.getServicos é um método que retorna um array de serviços
-            let listagemS = new ListagemServico(empresa.getServicos);
-            listagemS.listar();
+            let cpfConsumoServico = entrada.receberTexto(`Digite um CPF para cadastrar o serviço: `)
+            let selecionadorClienteConsumoServico = new Selecionador(empresa.getClientes)
+            let clienteConsumidorServico = selecionadorClienteConsumoServico.selecionar(cpfConsumoServico)
+
+            let nomeServicoConsumido = entrada.receberTexto(`Digite o nome do serviço: `)
+            let selecionadorServicoConsumo = new SelecionadorServicos (empresa.getServicos)
+            let servicoConsumido = selecionadorServicoConsumo.selecionar(nomeServicoConsumido)
+
+            let cadastroConsumoServico = new ConsumoServico()
+            cadastroConsumoServico.cadastrarConsumoServico(clienteConsumidorServico, servicoConsumido)
             break;
-        case 15:
-            let atualizarSer = new AtualizarServico(empresa.getServicos)
-            atualizarSer.atualizarServico()
+        case 15: 
+            let listagemMaioresConsumidores = new ListagemClientes (empresa.getClientes)
+            listagemMaioresConsumidores.listarMaioresConsumidoresDeProdutosOuServicos()
             break;
         case 16:
-            let deletarSer = new DeletarServico(empresa.getServicos)
-            deletarSer.deletarServico()
+            let listagemProdutoOuServicosMaisConsumidos = new ListagemClientes(empresa.getClientes)
+            listagemProdutoOuServicosMaisConsumidos.listarProdutosOuServicosMaisConsumidos()
             break;
         case 17:
-            const clientesMaisConsumiram = new ClientesQueMaisConsumiramProdutosQuant(empresa.getClientes);
-            clientesMaisConsumiram.listar();
+            let listagemClientesQueConsumiramMaisEmValor = new ListagemClientes(empresa.getClientes)
+            listagemClientesQueConsumiramMaisEmValor.listarClientesQueMaisConsumiramEmValor()
             break;
         case 18:
-            const produtosMaisConsumidos = new ProdutosMaisConsumidos(empresa.getProdutos, empresa.getServicos, empresa.getClientes);
-            produtosMaisConsumidos.listar();
+            let listagemProdutosMaisConsumidoPorTipoDePet = new ListagemClientes(empresa.getClientes)
+            listagemProdutosMaisConsumidoPorTipoDePet.listarProdutosMaisConsumidosPorTipoPets()
             break;
         case 19:
-            const clientesMaisConsumiramServicosValor = new ClientesQueMaisConsumiramServicosValor(empresa.getClientes);
-            clientesMaisConsumiramServicosValor.listar();
-            break;                
+            let listagemProdutosMaisConsumidoPorRacaDePet = new ListagemClientes(empresa.getClientes)
+            listagemProdutosMaisConsumidoPorRacaDePet.listarProdutosMaisConsumidosPorRacaPets()
+            break;
+        case 20:
+            let listagemServicosMaisConsumidoPorTipoDePet = new ListagemClientes(empresa.getClientes)
+            listagemServicosMaisConsumidoPorTipoDePet.listarServicosMaisConsumidosPorTipoPets()
+            break;
+        case 21:
+            let listagemServicosMaisConsumidoPorRacaDePet = new ListagemClientes(empresa.getClientes)
+            listagemServicosMaisConsumidoPorRacaDePet.listarServicosMaisConsumidosPorRacaPets()
+            break;
         case 0:
             execucao = false
             console.log(`Até mais`)
             break;
         default:
-            console.log(`Operação não entendida :(`)
+            console.log(`Operação não entendida :( `)
     }
+
 }

@@ -1,16 +1,18 @@
 {
-  "name": "c4p",
+  "name": "petlovers",
   "version": "1.0.0",
   "description": "",
-  "main": "out/app/main.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/node": "^18.11.9",
-    "@types/prompt-sync": "^4.2.0",
-    "prompt-sync": "^4.2.0"
+    "prompt-sync": "^4.2.0",
+    "typescript": "^5.2.2"
+  },
+  "devDependencies": {
+    "@types/prompt-sync": "^4.2.2"
   }
 }

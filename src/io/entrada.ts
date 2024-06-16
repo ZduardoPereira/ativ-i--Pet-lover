@@ -3,7 +3,7 @@ export default class Entrada {
     public receberNumero(mensagem: string): number {
         let prompt = promptSync();
         let valor = prompt(mensagem)
-        let numero  = new Number(valor)
+        let numero  = parseFloat(valor)
         return numero.valueOf()
     }
     public receberTexto(mensagem: string): string {
